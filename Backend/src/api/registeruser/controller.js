@@ -19,16 +19,11 @@ exports.create = (req, res) => {
 
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res, next) => {
-  UserRegistration.find()
+  UserRegistration.find({}).select('-_id -__v -createdAt -updatedAt')
     .then(users => {
       res.send(users);
     })
-    .catch(next);
-  // .catch(err => {
-  //     res.status(500).send({
-  //         message: err.message || "Some error occurred while retrieving notes."
-  //     });
-  // });
+    .catch(next);  
 };
 
 //Validate user credentials
@@ -39,17 +34,11 @@ exports.ValidateUser = (req, res, next) => {
     password: req.body.pass
   })
     .then(reslt => {
-      console.log(reslt.length);
+      // console.log(reslt);
       if (reslt.length === 0)
         res.send({ Message: "Invalid login details", status: 204 });
       else {
-        //console.log("status", reslt[0].scanDeviceTakenStatus, reslt);
-        if (
-          reslt[0].scanDeviceTakenStatus === false ||
-          reslt[0].scanDeviceTakenStatus === undefined
-        )
-          res.send({ Message: "Scan device not purchased", status: 304, data: {id: reslt[0]._id, username: reslt[0].userName}});
-        else res.send({ Message: "Valid User", status: 200,  empid: reslt[0]._id});
+        res.send({ Message: "Login Success", status: 200, data: {userName: reslt[0].userName, firstName: reslt[0].firstName}});        
       }     
     })
     .catch(next);

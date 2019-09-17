@@ -39,10 +39,11 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb://localhost/inteluscan',
+      uri: 'mongodb://localhost/rogue_app',
       // uri: 'mongodb://surendraraj3:a123456789@ds161764.mlab.com:61764/inteluscan',
       options: {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
       }
     }
   },
@@ -50,7 +51,7 @@ const config = {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
     mongo: {
-      uri: process.env.MONGODB_URI || 'mongodb://localhost/inteluscan'
+      uri: process.env.MONGODB_URI || 'mongodb://localhost/rogue_app'
     }
   }
 }
