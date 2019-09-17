@@ -1,12 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
-const productSchema = new Schema(
-  {    
+const companiesSchema = new Schema(
+  {
     name: {
       type: String
     },
-    price: {
+    noOfUsers: {
       type: Number
+    },
+    taxId: {
+      type: String
     },
     description: {
       type: String
@@ -22,15 +25,15 @@ const productSchema = new Schema(
   }
 );
 
-productSchema.methods = {
+companiesSchema.methods = {
   view(full) {
     const view = {
       // simple view
       id: this.id,
-      // productID: this.productID,
+      taxId: this.taxId,
       name: this.name,
-      price: this.price,
-      description: this.description,      
+      noOfUsers: this.noOfUsers,
+      description: this.description,
       status: this.status
     };
 
@@ -42,7 +45,7 @@ productSchema.methods = {
       : view;
   }
 };
-const model = mongoose.model("Product", productSchema);
+const model = mongoose.model("Company", companiesSchema);
 
 export const schema = model.schema;
 export default model;
