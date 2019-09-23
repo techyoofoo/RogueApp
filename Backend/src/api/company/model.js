@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+import baseschema from '../baseschema'
+const extendSchema = require('mongoose-extend-schema');
 
-const companiesSchema = new Schema(
+const companiesSchema = extendSchema(baseschema,
   {
     name: {
       type: String
@@ -13,15 +15,7 @@ const companiesSchema = new Schema(
     },
     description: {
       type: String
-    },
-    status: {
-      type: String,
-      enum: ["Active", "In-Active"],
-      default: "Active"
     }
-  },
-  {
-    timestamps: true
   }
 );
 
