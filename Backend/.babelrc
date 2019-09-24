@@ -8,7 +8,7 @@
 //   "sourceMaps": true,
 //   "retainLines": true
 // }
-{
+/* {
   "presets": [
     "es2015",
     "stage-1"
@@ -16,4 +16,7 @@
   "plugins": [
     "transform-runtime"
   ]
+} */
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
 }
