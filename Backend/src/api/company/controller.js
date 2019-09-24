@@ -1,10 +1,10 @@
 import Company from "./model";
 import mongoose, { Schema } from "mongoose";
 
-export const create = (req, res) => {
-  const modelTest = mongoose.model(req.params.table_name, Company);
-  const createProd = new modelTest(req.body);
-  createProd
+export const createCompany = (req, res) => {
+  const model = mongoose.model(req.params.table_name, Company);
+  const createCompany = new model(req.body);
+  createCompany
     .save()
     .then(data => {
       res.send({ status: 200, Message: "Company registered sucessfully" });
@@ -17,9 +17,10 @@ export const create = (req, res) => {
 };
 
 // Retrieve and return all notes from the database.
-export const fetchAllCompanys = (req, res, next) => {
-  Company.find({})
-    .select("-_id -__v -createdAt -updatedAt")
+export const fetchAllCompany = (req, res, next) => {
+  const model = mongoose.model(req.params.table_name, Company);
+  model.find({})
+     .select("-_id -__v -createdAt -updatedAt")
     .then(CompanyDtls => {
       res.send(CompanyDtls);
     })
@@ -33,7 +34,8 @@ export const updateCompanyById = async (req, res, next) => {
     { $set: { test: "asda" }},
     { multi: true }
   )  */
-  await Company.findOneAndUpdate(req.params.id, req.body, { new: true })
+  const model = mongoose.model(req.params.table_name, Company);
+  await model.findOneAndUpdate(req.params.id, req.body, { new: true })
     .then(CompanyInfo => {
         console.log('CompanyInfo', CompanyInfo)
       res.send({Message:`${CompanyInfo.name} Updated Successfully`});
@@ -43,7 +45,8 @@ export const updateCompanyById = async (req, res, next) => {
 
 //Delet Company by id
 export const deleteCompanyById = async (req,res, next) => {
-    await Company.deleteOne({ _id: req.params.id })
+   const model = mongoose.model(req.params.table_name, Company);
+    await model.deleteOne({ _id: req.params.id })
     .then(CompanyInfo => {
         console.log('CompanyInfo', CompanyInfo.deletedCount, )
         if(CompanyInfo.deletedCount > 0)
@@ -53,3 +56,14 @@ export const deleteCompanyById = async (req,res, next) => {
     })
     .catch(next);
 }
+
+export const findCompanyById = async (req,res, next) => {
+   const model = mongoose.model(req.params.table_name, Company);
+    await model.findById({ _id: req.params.id })
+    .then(CompanyInfo => {
+        console.log('CompanyInfo', CompanyInfo )
+        res.send(CompanyInfo);
+    })
+    .catch(next);
+}
+

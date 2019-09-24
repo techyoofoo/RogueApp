@@ -3,8 +3,8 @@ import mongoose, { Schema } from "mongoose";
 import baseschema from '../baseschema'
 
 export const create = (req, res) => {
-    const modelTest = mongoose.model(req.params.table_name, baseschema);
-    const create = new modelTest(req.body);
+    const model = mongoose.model(req.params.table_name, baseschema);
+    const create = new model(req.body);
     create
     .save()
     .then(data => {

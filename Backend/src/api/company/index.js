@@ -1,12 +1,14 @@
 import { Router } from "express";
-import { create, fetchAllCompanys, updateCompanyById, deleteCompanyById } from "./controller";
+import { createCompany, fetchAllCompany, updateCompanyById, deleteCompanyById,findCompanyById } from "./controller";
 
 
 const router = new Router();
 
 //router.post("/create_company", create);
-router.post("/create_company/:table_name", create);
-router.get('/get_company_details', fetchAllCompanys);
-router.put('/update_company/:id', updateCompanyById);
-router.delete('/delete_company/:id', deleteCompanyById);
+router.post("/create/:table_name", createCompany);
+router.get('/get/:table_name', fetchAllCompany);
+router.put('/update/:table_name/:id', updateCompanyById);
+router.delete('/delete/:table_name/:id', deleteCompanyById);
+router.get('/get/:table_name/:id', findCompanyById);
+
 export default router;
