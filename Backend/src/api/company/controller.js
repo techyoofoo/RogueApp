@@ -1,7 +1,9 @@
 import Company from "./model";
+import mongoose, { Schema } from "mongoose";
 
 export const create = (req, res) => {
-  const createProd = new Company(req.body);
+  const modelTest = mongoose.model(req.params.table_name, Company);
+  const createProd = new modelTest(req.body);
   createProd
     .save()
     .then(data => {
@@ -13,6 +15,7 @@ export const create = (req, res) => {
       });
     });
 };
+
 // Retrieve and return all notes from the database.
 export const fetchAllCompanys = (req, res, next) => {
   Company.find({})
@@ -24,7 +27,12 @@ export const fetchAllCompanys = (req, res, next) => {
 };
 
 // Update Company information
-export const updateCompanyById = async (req, res, next) => {    
+export const updateCompanyById = async (req, res, next) => {   
+ /*  db.getCollection('companies').update(
+    { defaulted: { $exists: false }},
+    { $set: { test: "asda" }},
+    { multi: true }
+  )  */
   await Company.findOneAndUpdate(req.params.id, req.body, { new: true })
     .then(CompanyInfo => {
         console.log('CompanyInfo', CompanyInfo)
