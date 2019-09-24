@@ -39,7 +39,8 @@ companiesSchema.methods = {
       : view;
   }
 };
-const model = mongoose.model("Company", companiesSchema);
 
-export const schema = model.schema;
-export default model;
+//const model = mongoose.model("Company", companiesSchema);
+
+//export const schema = model.schema;
+export default companiesSchema;
