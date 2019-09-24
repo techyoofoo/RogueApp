@@ -35,7 +35,7 @@ export const updateCompanyById = async (req, res, next) => {
     { multi: true }
   )  */
   const model = mongoose.model(req.params.table_name, Company);
-  await model.findOneAndUpdate(req.params.id, req.body, { new: true })
+  await model.findOneAndUpdate({ _id: req.params.id }, req.body, { new: false })
     .then(CompanyInfo => {
         console.log('CompanyInfo', CompanyInfo)
       res.send({Message:`${CompanyInfo.name} Updated Successfully`});
@@ -66,4 +66,7 @@ export const findCompanyById = async (req,res, next) => {
     })
     .catch(next);
 }
+
+
+
 
