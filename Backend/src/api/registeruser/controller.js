@@ -1,9 +1,11 @@
 import { success, notFound } from "../../services/response/";
 import UserRegistration from "./model";
+import mongoose, { Schema } from "mongoose";
 
 // Create and Save a new user
 exports.create = (req, res) => {
-  const createUserReg = new UserRegistration(req.body);
+  const model = mongoose.model(req.params.table_name, UserRegistration);
+  const createUserReg = new model(req.body);
   // Save User in the database
   createUserReg
     .save()
@@ -19,7 +21,8 @@ exports.create = (req, res) => {
 
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res, next) => {
-  UserRegistration.find({}).select('-_id -__v -createdAt -updatedAt')
+  const model = mongoose.model(req.params.table_name, UserRegistration);
+  model.find({}).select('-_id -__v -createdAt -updatedAt')
     .then(users => {
       res.send(users);
     })
@@ -29,9 +32,10 @@ exports.findAll = (req, res, next) => {
 //Validate user credentials
 exports.ValidateUser = (req, res, next) => {
   console.log("User Details", req.body);
-  UserRegistration.find({
-    userName: req.body.username,
-    password: req.body.pass
+  const model = mongoose.model(req.params.table_name, UserRegistration);
+  model.find({
+    userName: req.body.userName,
+    password: req.body.password
   })
     .then(reslt => {
       // console.log(reslt);

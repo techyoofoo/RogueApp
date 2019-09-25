@@ -6,10 +6,10 @@ import { create, findAll, ValidateUser } from "./controller";
 
 const router = new Router();
 
-router.get("/", findAll);
+router.get("/get/:table_name", findAll);
 
-router.post("/register", create);
+router.post("/register/:table_name", create);
 
-router.post("/checklogin", ValidateUser);
+router.post("/checklogin/:table_name", ValidateUser);
 
 export default router;
