@@ -36,6 +36,9 @@ const userRegistrationSchema = new Schema(
       enum: ["ANONYMOUS", "CUSTOMER"],
       default: "CUSTOMER"
     },
+    roleId: [
+      { type: Schema.Types.ObjectId, ref: 'role' }
+    ],
     companyName: {
       type: String
     }
@@ -65,9 +68,9 @@ userRegistrationSchema.methods = {
 
     return full
       ? {
-          ...view
-          // add properties for a full view
-        }
+        ...view
+        // add properties for a full view
+      }
       : view;
   }
 };
