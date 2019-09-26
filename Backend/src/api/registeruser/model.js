@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+import baseschema from '../baseschema';
+const extendSchema = require('mongoose-extend-schema');
 
-const userRegistrationSchema = new Schema(
+const userRegistrationSchema = new extendSchema(baseschema,
   {
     firstName: {
       type: String
@@ -26,22 +28,17 @@ const userRegistrationSchema = new Schema(
     mobileNo: {
       type: Number
     },
-    status: {
-      type: String,
-      enum: ["Active", "In-Active"],
-      default: "Active"
-    },
     userType: {
       type: String,
       enum: ["ANONYMOUS", "CUSTOMER"],
       default: "CUSTOMER"
     },
+    groupId:{
+      type: Schema.Types.ObjectId, ref: 'usergroup' 
+    },
     companyName: {
       type: String
     }
-  },
-  {
-    timestamps: true
   }
 );
 
@@ -60,18 +57,19 @@ userRegistrationSchema.methods = {
       mobileNo: this.mobileNo,
       status: this.status,
       userType: this.userType,
+      groupId:this.groupId,
       companyName: this.companyName
     };
 
     return full
       ? {
-          ...view
-          // add properties for a full view
-        }
+        ...view
+        // add properties for a full view
+      }
       : view;
   }
 };
-const model = mongoose.model("UserRegistration", userRegistrationSchema);
+//const model = mongoose.model("UserRegistration", userRegistrationSchema);
 
-export const schema = model.schema;
-export default model;
+//export const schema = model.schema;
+export default userRegistrationSchema;
