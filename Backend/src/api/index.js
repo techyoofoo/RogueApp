@@ -8,11 +8,11 @@ import usergroup from './usergroup';
 
 const router = new Router()
 
-router.use('/rouge/UserManagement/user', registeruser);
+router.use('/rouge/usermanagement/user', registeruser);
 router.use('/rouge/product', product);
 router.use('/rouge/company', company);
 router.use('/rouge/common', generic);
-router.use('/rouge/UserManagement/role', role);
-router.use('/rouge/UserManagement/usergroup', usergroup);
+router.use('/rouge/usermanagement/role', role);
+router.use('/rouge/usermanagement/usergroup', usergroup);
 
 export default router
