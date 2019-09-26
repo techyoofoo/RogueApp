@@ -33,9 +33,9 @@ const userRegistrationSchema = new extendSchema(baseschema,
       enum: ["ANONYMOUS", "CUSTOMER"],
       default: "CUSTOMER"
     },
-    roleId: [
-      { type: Schema.Types.ObjectId, ref: 'role' }
-    ],
+    groupId:{
+      type: Schema.Types.ObjectId, ref: 'usergroup' 
+    },
     companyName: {
       type: String
     }
@@ -57,6 +57,7 @@ userRegistrationSchema.methods = {
       mobileNo: this.mobileNo,
       status: this.status,
       userType: this.userType,
+      groupId:this.groupId,
       companyName: this.companyName
     };
 

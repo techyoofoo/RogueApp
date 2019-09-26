@@ -8,8 +8,8 @@ const router = new Router();
 
 router.get("/get/:table_name", findAll);
 
-router.post("/register/:table_name", create);
+router.post("/create/:table_name", create);
 
-router.post("/checklogin/:table_name", ValidateUser);
+router.post("/login/:table_name", ValidateUser);
 
 export default router;
