@@ -33,8 +33,8 @@ const userRegistrationSchema = new extendSchema(baseschema,
       enum: ["ANONYMOUS", "CUSTOMER"],
       default: "CUSTOMER"
     },
-    groupId:{
-      type: Schema.Types.ObjectId, ref: 'usergroup' 
+    groupId: {
+      type: Schema.Types.ObjectId, ref: "usergroup"
     },
     companyName: {
       type: String
@@ -57,7 +57,7 @@ userRegistrationSchema.methods = {
       mobileNo: this.mobileNo,
       status: this.status,
       userType: this.userType,
-      groupId:this.groupId,
+      groupId: this.groupId,
       companyName: this.companyName
     };
 
@@ -69,7 +69,7 @@ userRegistrationSchema.methods = {
       : view;
   }
 };
-//const model = mongoose.model("UserRegistration", userRegistrationSchema);
+// const model = mongoose.model("user", userRegistrationSchema);
 
-//export const schema = model.schema;
+// export const schema = model.schema;
 export default userRegistrationSchema;

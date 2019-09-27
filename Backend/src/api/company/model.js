@@ -40,7 +40,7 @@ companiesSchema.methods = {
   }
 };
 
-//const model = mongoose.model("Company", companiesSchema);
+//const model = mongoose.model("company", companiesSchema);
 
 //export const schema = model.schema;
 export default companiesSchema;
