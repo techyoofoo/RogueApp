@@ -11,7 +11,7 @@ const userGroupSchema = new extendSchema(baseschema,
       type: String
     },
     roleId: [
-      { type: Schema.Types.ObjectId, ref: 'role' }
+      { type: Schema.Types.ObjectId, ref: "role" }
     ]
   }
 );
@@ -35,7 +35,7 @@ userGroupSchema.methods = {
       : view;
   }
 };
-// const model = mongoose.model("UserGroup", userGroupSchema);
+// const model = mongoose.model("usergroup", userGroupSchema);
 
 // export const schema = model.schema;
 // export default model;
