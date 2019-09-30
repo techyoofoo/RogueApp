@@ -2,8 +2,7 @@ import Company from "./model";
 import mongoose, { Schema } from "mongoose";
 
 export const createCompany = (req, res) => {
-  const model = mongoose.model(req.params.table_name, Company);
-  const createCompany = new model(req.body);
+  const createCompany = new Company(req.body);
   createCompany
     .save()
     .then(data => {
