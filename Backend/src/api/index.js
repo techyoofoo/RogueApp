@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router } from 'express';
 import registeruser from './registeruser';
 import product from './products';
 import company from './company';
@@ -7,7 +7,7 @@ import role from './role';
 import usergroup from './usergroup';
 import menu from './menu';
 
-const router = new Router()
+const router = new Router();
 
 router.use('/rouge/usermanagement/user', registeruser);
 router.use('/rouge/product', product);
@@ -17,4 +17,4 @@ router.use('/rouge/usermanagement/role', role);
 router.use('/rouge/usermanagement/usergroup', usergroup);
 router.use('/rouge/menu', menu);
 
-export default router
+export default router;

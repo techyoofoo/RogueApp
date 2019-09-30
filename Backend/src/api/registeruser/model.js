@@ -69,7 +69,6 @@ userRegistrationSchema.methods = {
       : view;
   }
 };
-// const model = mongoose.model("user", userRegistrationSchema);
-
-// export const schema = model.schema;
-export default userRegistrationSchema;
+const model = mongoose.model("user", userRegistrationSchema);
+export const schema = model.schema;
+export default model;

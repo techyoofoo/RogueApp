@@ -35,11 +35,11 @@ userGroupSchema.methods = {
       : view;
   }
 };
-// const model = mongoose.model("usergroup", userGroupSchema);
+const model = mongoose.model("usergroup", userGroupSchema);
 
-// export const schema = model.schema;
-// export default model;
+export const schema = model.schema;
+export default model;
 
-export default userGroupSchema;
+//export default userGroupSchema;
 
 
