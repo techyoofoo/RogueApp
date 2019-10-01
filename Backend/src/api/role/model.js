@@ -9,7 +9,7 @@ const roleSchema = extendSchema(baseschema,
         },
         permission: {
             type: Array,
-            default: ["Read"]
+            default: ["read"]
         }
     }
 )
@@ -31,4 +31,8 @@ roleSchema.methods = {
     }
 };
 
-export default roleSchema;
+const model = mongoose.model("role", roleSchema);
+
+export const schema = model.schema;
+export default model;
+//export default roleSchema;

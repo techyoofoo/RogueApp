@@ -1,15 +1,16 @@
 import { Router } from "express";
 // import { middleware as query } from "querymen";
 // import { middleware as body } from "bodymen";
-import { create, findAll, ValidateUser } from "./controller";
+import { create, findAll, ValidateUser, updateUserById, deleteUserById, findUserById } from "./controller";
 
 
 const router = new Router();
 
-router.get("/get/:table_name", findAll);
-
-router.post("/create/:table_name", create);
-
-router.post("/login/:table_name", ValidateUser);
+router.get("/get", findAll);
+router.post("/create", create);
+router.post("/login", ValidateUser);
+router.put("/update/:id", updateUserById);
+router.delete("/delete/:id", deleteUserById);
+router.get("/get/:id", findUserById);
 
 export default router;

@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { create ,getAll} from "./controller";
+import { create, getAll, updateRoleById, deleteRoleById, findRoleById } from "./controller";
 
 const router = new Router();
 
-router.post("/create/:table_name", create);
-router.get("/get/:table_name", getAll);
+router.post("/create", create);
+router.get("/get", getAll);
+router.put("/update/:id", updateRoleById);
+router.delete("/delete/:id", deleteRoleById);
+router.get("/get/:id", findRoleById);
 
 export default router;

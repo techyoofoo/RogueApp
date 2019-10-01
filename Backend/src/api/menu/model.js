@@ -10,8 +10,8 @@ const menuSchema = new Schema(
         },
         state: {
             type: String,
-            enum: ["Enable", "Disable"],
-            default: "Enable"
+            enum: ["enable", "disable"],
+            default: "enable"
         },
         path: {
             type: String
@@ -32,8 +32,8 @@ const menuSchema = new Schema(
                 },
                 state: {
                     type: String,
-                    enum: ["Enable", "Disable"],
-                    default: "Enable"
+                    enum: ["enable", "disable"],
+                    default: "enable"
                 },
                 path: {
                     type: String
@@ -62,8 +62,8 @@ menuSchema.methods = {
             : view;
     }
 };
-// const model = mongoose.model("menu", menuSchema);
+const model = mongoose.model("menu", menuSchema);
 
-// export const schema = model.schema;
-// export default model;
-export default menuSchema;
+export const schema = model.schema;
+export default model;
+//export default menuSchema;
