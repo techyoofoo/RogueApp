@@ -7,7 +7,7 @@ export const create = (req, res) => {
   create
     .save()
     .then(data => {
-      res.send({ status: 200, Message: "Created sucessfully" });
+      res.send({ status: 200, id: data._id, Message: "Created sucessfully" });
     })
     .catch(err => {
       res.status(500).send({
@@ -32,7 +32,7 @@ export const updateById = async (req, res) => {
   const model = mongoose.model(req.params.table_name, schema);
   await model.findOneAndUpdate({ _id: req.params.id }, req.body, { new: false })
     .then(result => {
-      res.send({ Message: `Updated Successfully` });
+      res.send({ id: result._id, Message: `Updated Successfully` });
     })
     .catch(err => {
       res.status(500).send({
