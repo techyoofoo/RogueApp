@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import schema from './model'
+import schema from './model';
+var amqp = require('amqplib/callback_api');
 
 export const create = (req, res) => {
   const model = mongoose.model(req.params.table_name, schema);
@@ -8,6 +9,30 @@ export const create = (req, res) => {
     .save()
     .then(data => {
       res.send({ status: 200, id: data._id, Message: "Created sucessfully" });
+      amqp.connect('amqp://localhost', function (error0, connection) {
+        if (error0) {
+          throw error0;
+        }
+        connection.createChannel(function (error1, channel) {
+          if (error1) {
+            throw error1;
+          }
+          var queue = 'common';
+          var msg = `${data._id} Created sucessfully`;
+
+          channel.assertQueue(queue, {
+            durable: true
+          });
+          channel.sendToQueue(queue, Buffer.from(msg), {
+            persistent: true
+          });
+        });
+        setTimeout(function () {
+          connection.close();
+          process.exit(0);
+        }, 500);
+      });
+
     })
     .catch(err => {
       res.status(500).send({
