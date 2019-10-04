@@ -12,7 +12,7 @@ export const create = (req, res) => {
             createRole
                 .save()
                 .then(data => {
-                    res.send({ status: 200, Message: "Role saved sucessfully" });
+                    res.send({ status: 200, Message: "Role saved successfully" });
                 })
                 .catch(err => {
                     res.status(500).send({

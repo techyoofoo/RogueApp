@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\worker.js"
+            "program": "${workspaceFolder}\\sender.js"
         }
     ]
 }

@@ -5,7 +5,7 @@ export const create = (req, res) => {
   createProd
     .save()
     .then(data => {
-      res.send({ status: 200, Message: "Product registered sucessfully" });
+      res.send({ status: 200, Message: "Product registered successfully" });
     })
     .catch(err => {
       res.status(500).send({
