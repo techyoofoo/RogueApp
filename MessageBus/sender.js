@@ -1,40 +1,24 @@
 const express = require('express')
 const app = express();
-var amqp = require('amqplib/callback_api');
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
+import {publishToQueue, queueReceive} from './services/mqservices';
 
-app.post('/send', (req, res) => {
-    amqp.connect('amqp://localhost', function (error0, connection) {
-        if (error0) {
-            res.status(500).send({
-                message: error0
-            });
-        }
-        connection.createChannel(function (error1, channel) {
-            if (error1) {
-                res.status(500).send({
-                    message: error1
-                });
-            }
-            var queue = `${req.body.queue}`;
-            var msg = `${req.body.message}`;
-
-            channel.assertQueue(queue, {
-                durable: false
-            });
-            channel.sendToQueue(queue, Buffer.from(msg));
-        });
-        setTimeout(function () {
-            connection.close();
-            //process.exit(0);
-            res.status(200).send({
-                message: "Success!"
-            });
-        }, 500);
-    });
+app.post('/send', async(req, res) => {
+    var queueName = `${req.body.queue}`;
+    var msg = `${req.body.message}`;
+    await publishToQueue(queueName,msg);
+    res.statusCode = 200;
+    res.data = {"message-sent":true}
 });
+
+/* app.post('/receive', async(req, res) => {
+    var queueName = `${req.body.queue}`;
+    var msg = await queueReceive(queueName);
+    res.statusCode = 200;
+    res.data = {"message":msg};
+}); */
 
 app.listen(3000);
 

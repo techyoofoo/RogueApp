@@ -18,27 +18,27 @@ app.post('/receive', (req, res) => {
                     message: error1
                 });
             }
-
             var queue = `${req.body.queue}`;
-
             channel.assertQueue(queue, {
-                durable: false
+                durable: true
             });
-
-            //console.log("Waiting for messages in %s.", queue);
-
+            console.log("Waiting for messages in %s.", queue);
+            let message = "";
             channel.consume(queue, function (msg) {
-                res.status(200).send({
-                    message: msg.content.toString()
-                });
-            }, {
-                noAck: true
-            });
+                message += msg.content.toString();
+                setTimeout(function(){
+                    console.log("Message:", msg.content.toString());
+                    res.status(200).send({
+                        message: message
+                    });
+                  },10000);
+                  },{ noAck: false }
+                );
         });
     });
 });
 
-app.listen(3000);
+app.listen(5000);
 
 
 
