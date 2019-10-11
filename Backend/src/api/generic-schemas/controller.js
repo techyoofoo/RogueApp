@@ -12,6 +12,7 @@ export const create = (req, res) => {
         queue: 'common',
         message: `${data._id} Created successfully`
       }).then(function (response) {
+        res.data = response.data;
         //console.log(response);
       }).catch(function (error) {
         //console.log(error);
