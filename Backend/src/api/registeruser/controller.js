@@ -10,7 +10,7 @@ exports.create = (req, res) => {
   createUserReg
     .save()
     .then(data => {
-      res.send({ status: 200, Message: "User registered sucessfully" });
+      res.send({ status: 200, Message: "User registered successfully" });
     })
     .catch(err => {
       res.status(500).send({

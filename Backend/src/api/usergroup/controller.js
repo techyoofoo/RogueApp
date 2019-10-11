@@ -12,7 +12,7 @@ export const create = (req, res) => {
             createUserGroup
                 .save()
                 .then(data => {
-                    res.send({ status: 200, Message: "Group saved sucessfully" });
+                    res.send({ status: 200, Message: "Group saved successfully" });
                 })
                 .catch(err => {
                     res.status(500).send({

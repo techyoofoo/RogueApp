@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import schema from './model'
+import schema from './model';
+import axios from 'axios';
 
 export const create = (req, res) => {
   const model = mongoose.model(req.params.table_name, schema);
@@ -7,7 +8,17 @@ export const create = (req, res) => {
   create
     .save()
     .then(data => {
-      res.send({ status: 200, id: data._id, Message: "Created sucessfully" });
+      axios.post('http://localhost:3000/send', {
+        queue: 'common',
+        message: `${data._id} Created successfully`
+      }).then(function (response) {
+        res.data = response.data;
+        //console.log(response);
+      }).catch(function (error) {
+        //console.log(error);
+      });
+
+      res.send({ status: 200, id: data._id, Message: "Created successfully" });
     })
     .catch(err => {
       res.status(500).send({

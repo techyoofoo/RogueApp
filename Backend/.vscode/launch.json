@@ -68,7 +68,7 @@
         "name": "Attach to Process",
         "type": "node",
         "request": "attach",
-        "processId": "${command.PickProcess}",
+        "processId": "17716",
         "port": 9000,
         "sourceMaps": false,
         "outFiles": []
