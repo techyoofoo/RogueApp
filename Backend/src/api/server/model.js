@@ -8,6 +8,9 @@ const serverSchema = extendSchema(baseschema,
         name: {
             type: String
         },
+        clientid:   {
+            String
+        },
         iv: {
             type: String
         },
@@ -25,6 +28,7 @@ serverSchema.methods = {
         const view = {
             id: this.id,
             name: this.name,
+            clientid: this.clientid,
             iv: this.iv,
             key: this.key,
             connection: this.connection
