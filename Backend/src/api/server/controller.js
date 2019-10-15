@@ -28,7 +28,7 @@ export const findServerById = async (req, res) => {
     await serverSchema.findById({ _id: req.params.id })
         .then(ServerInfo => {
             let conString = decrypt(ServerInfo);
-            res.send(conString);
+            res.send({ clientid: ServerInfo.clientid, name: ServerInfo.name, connection: conString });
         })
         .catch(err => {
             res.status(500).send({
