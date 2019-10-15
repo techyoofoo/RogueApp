@@ -6,6 +6,7 @@ import generic from './generic-schemas';
 import role from './role';
 import usergroup from './usergroup';
 import menu from './menu';
+import server from './server';
 
 const router = new Router();
 
@@ -16,5 +17,6 @@ router.use('/rouge/common', generic);
 router.use('/rouge/usermanagement/role', role);
 router.use('/rouge/usermanagement/usergroup', usergroup);
 router.use('/rouge/menu', menu);
+router.use('/rouge/server', server);
 
 export default router;
