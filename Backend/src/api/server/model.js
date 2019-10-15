@@ -8,8 +8,8 @@ const serverSchema = extendSchema(baseschema,
         name: {
             type: String
         },
-        clientid:   {
-            String
+        clientid: {
+            type: String
         },
         iv: {
             type: String

@@ -1,5 +1,6 @@
 import serverSchema from "./model";
 import mongoose, { Schema } from "mongoose";
+import { postToMq } from '../../mqservice/service';
 
 const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
@@ -9,10 +10,11 @@ const iv = crypto.randomBytes(16);
 export const create = async (req, res) => {
     let conString = `server=${req.body.server};database=${req.body.database};uid=${req.body.userid};pwd=${req.body.password};pooling=${req.body.pooling};`
     var encrypted = encrypt(conString);
-    const createServer = new serverSchema({ name: req.body.name, clientid: req.clientid, iv: encrypted.iv, key: encrypted.key, connection: encrypted.encryptedData });
+    const createServer = new serverSchema({ name: req.body.name, clientid: req.body.clientid, iv: encrypted.iv, key: encrypted.key, connection: encrypted.encryptedData });
     await createServer
         .save()
         .then(data => {
+            postToMq("server", data._id, `${data.clientid} creted successfully`);
             res.send({ status: 200, id: data._id, message: "Saved successfully" });
         })
         .catch(err => {
