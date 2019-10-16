@@ -37,6 +37,27 @@ export const findServerById = async (req, res) => {
         });
 }
 
+export const testConnection = (req, res) => {
+    var sql = require("mssql");
+    var config = {
+        user: req.body.userid,
+        password: req.body.password,
+        server: req.body.server,
+        database: req.body.database,
+        port: req.body.port
+    };
+    sql.connect(config, function (err) {
+        if (err) {
+            sql.close();
+            res.send(false);
+        }
+        else {
+            sql.close();
+            res.send(true);
+        }
+    });
+}
+
 
 function encrypt(text) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
