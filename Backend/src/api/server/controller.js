@@ -14,7 +14,7 @@ export const create = async (req, res) => {
     await createServer
         .save()
         .then(data => {
-            postToMq("server", "Yoofoo.Usermanagement.usercreation", { id: data._id, clientid: data.clientid, connection: conString });
+            postToMq("server", "Yoofoo.Server.Create", { id: data._id, clientid: data.clientid, connection: conString });
             res.send({ status: 200, id: data._id, message: "Database configuration saved successfully" });
         })
         .catch(err => {
