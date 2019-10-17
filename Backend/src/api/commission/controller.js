@@ -13,28 +13,27 @@ export const getCommissionByClientId = async (req, res) => {
     sql.connect(config, function (err) {
         var request = new sql.Request();
         request.input('CustomerId', sql.Int, req.params.id)
-            .query(`SELECT
-                      hs.DesignerID
-                      ,StartDate = hs.Period
-                      ,hs.PaidAsTitle
-                      ,hs.Commission
-                      ,hs.PV
-                      ,hs.TV
-                      ,hs.EV
-                      ,hs.PSQ
-                      ,hs.L1M
-                      ,hs.MML
-                      ,p.PeriodID
-                      ,p.PeriodTypeID
-                      ,p.PeriodDescription
-                      ,p.StartDate
-                      ,p.EndDate
-                      ,dateadd(day, 1, p.EndDate) as ActualEndDate
-              FROM [HistoricalCommission].[HistoricalSummary] hs
-              INNER JOIN Periods p
-              ON CONVERT(date, hs.Period) = CONVERT(date, p.StartDate)
-              WHERE designerid = @CustomerId 
-              ORDER BY p.StartDate DESC`,
+            .query(`  SELECT
+            pv.CustomerID
+            ,Total = c.Total
+            ,r.RankID
+            ,r.RankDescription
+            ,p.PeriodID
+            ,p.PeriodDescription
+        FROM PeriodVolumes AS pv
+        INNER JOIN Periods AS p 
+            ON p.PeriodID = pv.PeriodID
+        JOIN CommissionRuns cr
+            ON cr.PeriodID = p.PeriodID
+        JOIN Commissions c
+            ON c.CommissionRunID = cr.CommissionRunID
+            AND c.CustomerID = pv.CustomerID
+        INNER JOIN Ranks AS r 
+            ON r.RankID = pv.PaidRankID
+        WHERE 
+            pv.CustomerID = @CustomerId
+            AND pv.PeriodTypeId = 1
+            AND p.EndDate BETWEEN '2019-04-17' AND DATEADD(hh, -24, '2019-10-17')`,
                 function (err, recordset) {
                     if (err) {
                         sql.close();
@@ -42,7 +41,7 @@ export const getCommissionByClientId = async (req, res) => {
                     }
                     else {
                         sql.close();
-                        res.send(recordset);
+                        res.send(recordset.recordset);
                     }
                 });
     });
