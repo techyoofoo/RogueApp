@@ -8,13 +8,13 @@ const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
 
 export const create = async (req, res) => {
-    let conString = `server=${req.body.server};database=${req.body.database};uid=${req.body.userid};pwd=${req.body.password};pooling=${req.body.pooling};`
-    var encrypted = encrypt(conString);
+    //let conString = `server=${req.body.server};database=${req.body.database};uid=${req.body.userid};pwd=${req.body.password};pooling=${req.body.pooling};`
+    var encrypted = encrypt(JSON.stringify(req.body));
     const createServer = new serverSchema({ name: req.body.name, clientid: req.body.clientid, iv: encrypted.iv, key: encrypted.key, connection: encrypted.encryptedData });
     await createServer
         .save()
         .then(data => {
-            postToMq("server", "Yoofoo.Server.Create", { id: data._id, clientid: data.clientid, connection: conString });
+            postToMq("server", "Yoofoo.Server.Create", { id: data._id, clientid: data.clientid, connection: req.body });
             res.send({ status: 200, id: data._id, message: "Database configuration saved successfully" });
         })
         .catch(err => {
@@ -28,7 +28,7 @@ export const findServerById = async (req, res) => {
     await serverSchema.findById({ _id: req.params.id })
         .then(ServerInfo => {
             let conString = decrypt(ServerInfo);
-            res.send({ clientid: ServerInfo.clientid, name: ServerInfo.name, connection: conString });
+            res.send({ clientid: ServerInfo.clientid, name: ServerInfo.name, connection: JSON.parse(conString) });
         })
         .catch(err => {
             res.status(500).send({
